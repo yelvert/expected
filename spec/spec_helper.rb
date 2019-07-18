@@ -25,6 +25,8 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
+  config.include UnitTests::Matchers
+
   config.include Expected::Matchers
 
   config.order = :random
