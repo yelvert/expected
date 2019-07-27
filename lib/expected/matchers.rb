@@ -7,3 +7,4 @@ module Expected
 end
 
 require 'expected/matchers/have_constant'
+require 'expected/matchers/inherit_from'
