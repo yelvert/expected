@@ -5,8 +5,12 @@ AllCops:
 Layout/DotPosition:
   EnforcedStyle: trailing
 
-Layout/EmptyLineAfterGuardClause:
-  Enabled: false
+Layout/EmptyLinesAroundBlockBody:
+  Exclude:
+    - spec/**/*
+
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: empty_lines_special
 
 Layout/EmptyLinesAroundModuleBody:
   EnforcedStyle: empty_lines_special
@@ -14,28 +18,58 @@ Layout/EmptyLinesAroundModuleBody:
 Layout/IndentationConsistency:
   EnforcedStyle: indented_internal_methods
 
+Layout/LineLength:
+  Max: 120
+  IgnoredPatterns:
+    - ^\W*\#
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
 Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: false
 
 Layout/SpaceInsidePercentLiteralDelimiters:
   Enabled: false
 
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Layout/RescueEnsureAlignment:
+  Enabled: false
+
 
 
 Metrics/BlockLength:
   Exclude:
-    - '**/spec/**/*'
+    - spec/**/*
 
 Metrics/ModuleLength:
   Exclude:
-    - '**/spec/**/*'
-
-Metrics/LineLength:
-  Max: 120
-  IgnoredPatterns:
-    - '^\W*\#'
+    - spec/**/*
 
 
+
+Style/AccessModifierDeclarations:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DocumentationMethod:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
 
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: comma

@@ -10,9 +10,9 @@ Gem::Specification.new do |s|
   s.date        = Time.now.strftime('%Y-%m-%d')
   s.email       = 'rubygems@yelvert.io'
   s.homepage    = 'https://github.com/yelvert/expected'
-  s.summary     = "Lots o' matchers"
+  s.summary     = "RSpec's missing matchers"
   s.license     = 'MIT'
-  s.description = "Lots o' matchers"
+  s.description = "RSpec's missing matchers"
   s.metadata    = {
     'bug_tracker_uri' => 'https://github.com/yelvert/expected/issues',
     'changelog_uri' => 'https://github.com/yelvert/expected/blob/master/CHANGELOG.md',
@@ -29,5 +29,5 @@ Gem::Specification.new do |s|
   s.require_paths = %w[ lib ]
 
   s.required_ruby_version = '>= 2.4.0'
-  s.add_dependency('activesupport', '>= 5.0.0')
+  s.add_dependency('activesupport', '~> 5.0', '>= 5.0.0')
 end

@@ -101,6 +101,7 @@ module Expected
         def expectation
           "<#{@original_subject}> to have attr_writer `#{attribute}`"
         end
+
     end
 
   end

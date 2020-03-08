@@ -60,6 +60,7 @@ module Expected
         def expectation
           "<#{subject.inspect}> to inherit from <#{expected_ancestor.inspect}>"
         end
+
     end
 
   end

@@ -19,7 +19,7 @@ module Expected
 
     # Class used by {#have_constant}
     class HaveAttrAccessorMatcher
-      attr_accessor :attribute, :subject, :has_attr_reader, :has_attr_writer
+      attr_reader :attribute, :subject, :has_attr_reader, :has_attr_writer
 
       # @param attribute [String, Symbol] The attribute the {#subject} is expected to have an attr_accessor for
       def initialize(attribute)
@@ -59,7 +59,7 @@ module Expected
 
         # The thing to test against
         # @return [Class, Module]
-        def subject=(subject)
+        def subject=(subject) # rubocop:disable Style/TrivialAccessors
           @subject = subject
         end
 
@@ -81,6 +81,7 @@ module Expected
         def expectation
           "<#{subject}> to have attr_accessor `#{attribute}`"
         end
+
     end
 
   end

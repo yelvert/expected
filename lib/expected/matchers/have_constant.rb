@@ -136,6 +136,7 @@ module Expected
           expectation += " with a value of #{options[:value].inspect}" if options[:value]
           expectation
         end
+
     end
 
   end

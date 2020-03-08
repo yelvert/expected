@@ -29,6 +29,7 @@ module Expected
             Module.new do
               class << self
                 attr_writer :good
+
               end
             end
           end
@@ -40,6 +41,7 @@ module Expected
           subject do
             Class.new do
               attr_writer :good
+
             end
           end
 
@@ -50,6 +52,7 @@ module Expected
           subject do
             Class.new do
               attr_writer :good
+
             end.new
           end
 
@@ -154,7 +157,7 @@ module Expected
         end
       end
 
-      describe "#attribute_ivar" do
+      describe '#attribute_ivar' do
         it 'should return an instance variable name for the attribute' do
           expect(subject.send(:attribute_ivar)).to be(:"@#{subject.attribute}")
         end
@@ -190,13 +193,15 @@ module Expected
         before(:example) { subject.send(:subject=, matches_subject) }
 
         it 'should return true if the attribute method sets the instance variable' do
-          expect(matches_subject).to receive(subject.send(:method_name)) {|arg| matches_subject.instance_variable_set(subject.send(:attribute_ivar), arg) }
+          expect(matches_subject).to receive(subject.send(:method_name)) do |arg|
+            matches_subject.instance_variable_set(subject.send(:attribute_ivar), arg)
+          end
           expect(subject.instance_variable_defined?(:@failure)).to be_falsy
           expect(subject.send(:sets_correct_value?)).to be_truthy
           expect(subject.instance_variable_defined?(:@failure)).to be_falsy
         end
 
-        it 'should return false and set the failure message if the attribute method does not set the instance variable' do
+        it 'should return false and set @failure if the attribute method does not set the instance variable' do
           expect(matches_subject).to receive(subject.send(:method_name)) { double(:bad) }
           expect(subject.instance_variable_defined?(:@failure)).to be_falsy
           expect(subject.send(:sets_correct_value?)).to be_falsy

@@ -26,7 +26,9 @@ module Expected
           it { is_expected.not_to have_attr_accessor(missing_reader) }
           it {
             expect { is_expected.to have_attr_accessor(missing_reader) }.to(
-              fail_with_message("Expected <#{subject}> to have attr_accessor `#{missing_reader}` (no method `#{missing_reader}`)")
+              fail_with_message(
+                "Expected <#{subject}> to have attr_accessor `#{missing_reader}` (no method `#{missing_reader}`)"
+              )
             )
           }
         end
@@ -35,7 +37,9 @@ module Expected
           it { is_expected.not_to have_attr_accessor(missing_writer) }
           it {
             expect { is_expected.to have_attr_accessor(missing_writer) }.to(
-              fail_with_message("Expected <#{subject}> to have attr_accessor `#{missing_writer}` (no method `#{missing_writer}=`)")
+              fail_with_message(
+                "Expected <#{subject}> to have attr_accessor `#{missing_writer}` (no method `#{missing_writer}=`)"
+              )
             )
           }
         end
@@ -49,6 +53,7 @@ module Expected
                 attr_accessor :good
                 attr_writer :missing_reader
                 attr_reader :missing_writer
+
               end
             end
           end
@@ -62,6 +67,7 @@ module Expected
               attr_accessor :good
               attr_writer :missing_reader
               attr_reader :missing_writer
+
             end
           end
 
@@ -74,6 +80,7 @@ module Expected
               attr_accessor :good
               attr_writer :missing_reader
               attr_reader :missing_writer
+
             end.new
           end
 
@@ -185,7 +192,7 @@ module Expected
           expect(subject.instance_variable_defined?(:@failure)).to be_falsy
         end
 
-        it 'should return false and set @failure to the has_attr_reader failure if the has_attr_reader does not match' do
+        it 'should return false and set @failure to the has_attr_reader @failure if has_attr_reader does not match' do
           expect(subject.has_attr_reader).to receive(:matches?).with(matches_subject).and_return(false)
           failure = double(:failure)
           subject.has_attr_reader.instance_variable_set(:@failure, failure)
@@ -206,7 +213,7 @@ module Expected
           expect(subject.instance_variable_defined?(:@failure)).to be_falsy
         end
 
-        it 'should return false and set @failure to the has_attr_writer failure if the has_attr_writer does not match' do
+        it 'should return false and set @failure to the has_attr_writer @failure if has_attr_writer does not match' do
           expect(subject.has_attr_writer).to receive(:matches?).with(matches_subject).and_return(false)
           failure = double(:failure)
           subject.has_attr_writer.instance_variable_set(:@failure, failure)

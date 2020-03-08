@@ -3,6 +3,7 @@
 # :nodoc:
 module Expected
   class << self
+
     # Configure the library
     # @yield [Configuration]
     def configure
@@ -14,6 +15,7 @@ module Expected
     def configuration
       @configuration ||= Configuration.new
     end
+
   end
 
   # Configuration class

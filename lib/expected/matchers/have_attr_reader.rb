@@ -96,6 +96,7 @@ module Expected
         def expectation
           "<#{@original_subject}> to have attr_reader `#{attribute}`"
         end
+
     end
 
   end

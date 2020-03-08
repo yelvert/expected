@@ -7,8 +7,8 @@ module Expected
         have_constant(:VERSION).
           with_value([
             Version::MAJOR,
-            Version::MAJOR,
-            Version::MAJOR,
+            Version::MINOR,
+            Version::PATCH,
           ].join('.'))
       )
     }

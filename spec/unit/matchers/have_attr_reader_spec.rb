@@ -29,6 +29,7 @@ module Expected
             Module.new do
               class << self
                 attr_reader :good
+
               end
             end
           end
@@ -40,6 +41,7 @@ module Expected
           subject do
             Class.new do
               attr_reader :good
+
             end
           end
 
@@ -50,6 +52,7 @@ module Expected
           subject do
             Class.new do
               attr_reader :good
+
             end.new
           end
 
@@ -154,7 +157,7 @@ module Expected
         end
       end
 
-      describe "#attribute_ivar" do
+      describe '#attribute_ivar' do
         it 'should return an instance variable name for the attribute' do
           expect(subject.send(:attribute_ivar)).to be(:"@#{subject.attribute}")
         end
@@ -184,13 +187,16 @@ module Expected
         before(:example) { subject.send(:subject=, matches_subject) }
 
         it 'should return true if the attribute method returns the instance variable' do
-          expect(matches_subject).to receive(subject.attribute) { matches_subject.instance_variable_get(subject.send(:attribute_ivar)) }
+          expect(matches_subject).to receive(subject.attribute) do
+            matches_subject.instance_variable_get(subject.send(:attribute_ivar))
+          end
           expect(subject.instance_variable_defined?(:@failure)).to be_falsy
           expect(subject.send(:returns_correct_value?)).to be_truthy
           expect(subject.instance_variable_defined?(:@failure)).to be_falsy
         end
 
-        it 'should return false and set the failure message if the attribute method returns something other than the instance variable' do
+        it 'should return false and set the failure message if the attribute method ' \
+        'returns something other than the instance variable' do
           expect(matches_subject).to receive(subject.attribute) { double(:bad) }
           expect(subject.instance_variable_defined?(:@failure)).to be_falsy
           expect(subject.send(:returns_correct_value?)).to be_falsy
