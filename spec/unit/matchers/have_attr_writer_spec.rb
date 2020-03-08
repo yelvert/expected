@@ -2,58 +2,58 @@
 
 module Expected
   module Matchers
-    RSpec.describe HaveAttrReaderMatcher do
-      shared_examples :have_attr_reader do |good, bad|
+    RSpec.describe HaveAttrWriterMatcher do
+      shared_examples :have_attr_writer do |good, bad|
         context "valid #{good}" do
-          it { is_expected.to have_attr_reader(good) }
+          it { is_expected.to have_attr_writer(good) }
           it {
-            expect { is_expected.not_to have_attr_reader(good) }.to(
-              fail_with_message("Did not expect <#{subject}> to have attr_reader `#{good}`")
+            expect { is_expected.not_to have_attr_writer(good) }.to(
+              fail_with_message("Did not expect <#{subject}> to have attr_writer `#{good}`")
             )
           }
         end
 
         context "missing #{bad}" do
-          it { is_expected.not_to have_attr_reader(bad) }
+          it { is_expected.not_to have_attr_writer(bad) }
           it {
-            expect { is_expected.to have_attr_reader(bad) }.to(
-              fail_with_message("Expected <#{subject}> to have attr_reader `#{bad}` (no method `#{bad}`)")
+            expect { is_expected.to have_attr_writer(bad) }.to(
+              fail_with_message("Expected <#{subject}> to have attr_writer `#{bad}` (no method `#{bad}=`)")
             )
           }
         end
       end
 
-      describe :have_attr_reader do
+      describe :have_attr_writer do
         describe 'subject is a module' do
           subject do
             Module.new do
               class << self
-                attr_reader :good
+                attr_writer :good
               end
             end
           end
 
-          it_behaves_like :have_attr_reader, :good, :bad
+          it_behaves_like :have_attr_writer, :good, :bad
         end
 
         describe 'subject is a class' do
           subject do
             Class.new do
-              attr_reader :good
+              attr_writer :good
             end
           end
 
-          it_behaves_like :have_attr_reader, :good, :bad
+          it_behaves_like :have_attr_writer, :good, :bad
         end
 
         describe 'subject is an instance' do
           subject do
             Class.new do
-              attr_reader :good
+              attr_writer :good
             end.new
           end
 
-          it_behaves_like :have_attr_reader, :good, :bad
+          it_behaves_like :have_attr_writer, :good, :bad
         end
       end
 
@@ -74,11 +74,11 @@ module Expected
       end
 
       describe '#matches?(subject)' do
-        checks = %i[ method? returns_correct_value? ]
+        checks = %i[ method? sets_correct_value? ]
         let(:matches_subject_attribute) { subject.attribute }
         let(:matches_subject) do
           c = Class.new
-          c.send(:attr_reader, matches_subject_attribute)
+          c.send(:attr_writer, matches_subject_attribute)
           c.new
         end
 
@@ -127,7 +127,7 @@ module Expected
 
       describe '#description' do
         it 'should have the name of the attribute' do
-          expect(subject.description).to eql("have_attr_reader: `#{subject.attribute}`")
+          expect(subject.description).to eql("have_attr_writer: `#{subject.attribute}`")
         end
       end
 
@@ -160,42 +160,48 @@ module Expected
         end
       end
 
+      describe '#method_name' do
+        it 'should return a method name for the setter of the attribute' do
+          expect(subject.send(:method_name)).to be(:"#{subject.attribute}=")
+        end
+      end
+
       describe '#method?' do
         let(:matches_subject) { double(:matches_subject) }
         before(:example) { subject.send(:subject=, matches_subject) }
 
         it 'should return true if the subject a method for the attribute' do
-          expect(matches_subject).to receive(:respond_to?).with(subject.attribute).and_return(true)
+          expect(matches_subject).to receive(:respond_to?).with(subject.send(:method_name)).and_return(true)
           expect(subject.instance_variable_defined?(:@failure)).to be_falsy
           expect(subject.send(:method?)).to be_truthy
           expect(subject.instance_variable_defined?(:@failure)).to be_falsy
         end
 
         it 'should return false and set the failure message if the subject does not have a method for the attribute' do
-          expect(matches_subject).to receive(:respond_to?).with(subject.attribute).and_return(false)
+          expect(matches_subject).to receive(:respond_to?).with(subject.send(:method_name)).and_return(false)
           expect(subject.instance_variable_defined?(:@failure)).to be_falsy
           expect(subject.send(:method?)).to be_falsy
-          expect(subject.instance_variable_get(:@failure)).to eql("no method `#{subject.attribute}`")
+          expect(subject.instance_variable_get(:@failure)).to eql("no method `#{subject.send(:method_name)}`")
         end
       end
 
-      describe '#returns_correct_value?' do
+      describe '#sets_correct_value?' do
         let(:matches_subject) { double(:matches_subject) }
         before(:example) { subject.send(:subject=, matches_subject) }
 
-        it 'should return true if the attribute method returns the instance variable' do
-          expect(matches_subject).to receive(subject.attribute) { matches_subject.instance_variable_get(subject.send(:attribute_ivar)) }
+        it 'should return true if the attribute method sets the instance variable' do
+          expect(matches_subject).to receive(subject.send(:method_name)) {|arg| matches_subject.instance_variable_set(subject.send(:attribute_ivar), arg) }
           expect(subject.instance_variable_defined?(:@failure)).to be_falsy
-          expect(subject.send(:returns_correct_value?)).to be_truthy
+          expect(subject.send(:sets_correct_value?)).to be_truthy
           expect(subject.instance_variable_defined?(:@failure)).to be_falsy
         end
 
-        it 'should return false and set the failure message if the attribute method returns something other than the instance variable' do
-          expect(matches_subject).to receive(subject.attribute) { double(:bad) }
+        it 'should return false and set the failure message if the attribute method does not set the instance variable' do
+          expect(matches_subject).to receive(subject.send(:method_name)) { double(:bad) }
           expect(subject.instance_variable_defined?(:@failure)).to be_falsy
-          expect(subject.send(:returns_correct_value?)).to be_falsy
+          expect(subject.send(:sets_correct_value?)).to be_falsy
           expect(subject.instance_variable_get(:@failure)).to(
-            eql("method `#{subject.attribute}` did not return the value of #{subject.send(:attribute_ivar)}")
+            eql("method `#{subject.send(:method_name)}` did not set the value of #{subject.send(:attribute_ivar)}")
           )
         end
       end
@@ -205,7 +211,7 @@ module Expected
         before(:example) { subject.send(:subject=, matches_subject) }
 
         it 'should have the name of the attribute' do
-          expect(subject.send(:expectation)).to eql("<#{matches_subject}> to have attr_reader `#{subject.attribute}`")
+          expect(subject.send(:expectation)).to eql("<#{matches_subject}> to have attr_writer `#{subject.attribute}`")
         end
       end
 
