@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    expected (1.0.0)
+    expected (1.0.2)
       activesupport (>= 5.0.0)
 
 GEM

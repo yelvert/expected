@@ -8,6 +8,11 @@ module Expected
     # @yield [Configuration]
     def configure
       yield configuration
+      return unless defined?(::RSpec)
+      ::RSpec.configure do |config|
+        config.include(Matchers)
+      end
+      configuration
     end
 
     # Memoized {Configuration}
