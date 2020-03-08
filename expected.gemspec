@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.description = "RSpec's missing matchers"
   s.metadata    = {
     'bug_tracker_uri' => 'https://github.com/yelvert/expected/issues',
-    'changelog_uri' => 'https://github.com/yelvert/expected/blob/master/CHANGELOG.md',
+    'changelog_uri' => 'https://github.com/yelvert/expected/commits/master',
     'documentation_uri' => 'https://github.com/yelvert/expected/wiki',
     'homepage_uri' => 'https://github.com/yelvert/expected',
     'source_code_uri' => 'https://github.com/yelvert/expected',
