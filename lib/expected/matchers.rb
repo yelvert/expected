@@ -8,3 +8,4 @@ end
 
 require 'expected/matchers/have_constant'
 require 'expected/matchers/inherit_from'
+require 'expected/matchers/have_attr_reader'

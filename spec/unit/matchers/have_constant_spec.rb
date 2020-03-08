@@ -189,7 +189,7 @@ module Expected
 
       describe '#matches?(subject)' do
         checks = %i[ constant_exists? correct_type? correct_value? ]
-        let(:matches_subject_const_name) { random_const_name }
+        let(:matches_subject_const_name) { subject.name }
         let(:matches_subject) { Object.const_set(matches_subject_const_name, Class.new).new }
 
         after(:example) { Object.send(:remove_const, matches_subject_const_name) }
