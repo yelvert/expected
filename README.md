@@ -33,12 +33,22 @@ end
 
 
 
-### `inherit_from`
-Used to test inheritance
+### `be_a_concern`
+Used to test that a Module is an ActiveSupport::Concern
 
 ```ruby
-# Test if the subject inherits from the supplied Class
-it { is_expected.to inherit_from(SomeClass) }
+# Test if the subject is an ActiveSupport::Concern`
+it { is_expected.to be_a_concern }
+```
+
+
+
+### `extend_module`
+Used to test that a Class or Module extends the supplied Module
+
+```ruby
+# Test if the subject extends the supplied Module
+it { is_expected.to extend_module(SomeModule) }
 ```
 
 
@@ -85,6 +95,26 @@ Used to test inclusion of `attr_accessor :attribute`
 ```ruby
 # Test if the subject has `attr_accessor :attribute`
 it { is_expected.to have_attr_accessor(:attribute) }
+```
+
+
+
+### `include_module`
+Used to test that a Class or Module includes the supplied Module
+
+```ruby
+# Test if the subject includes the supplied Module
+it { is_expected.to include_module(SomeModule) }
+```
+
+
+
+### `inherit_from`
+Used to test inheritance
+
+```ruby
+# Test if the subject inherits from the supplied Class
+it { is_expected.to inherit_from(SomeClass) }
 ```
 
 
