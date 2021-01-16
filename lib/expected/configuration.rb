@@ -7,7 +7,7 @@ module Expected
     # Configure the library
     # @yield [Configuration]
     def configure
-      yield configuration
+      yield configuration if block_given?
       return unless defined?(::RSpec)
       ::RSpec.configure do |config|
         config.include(Matchers)

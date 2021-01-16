@@ -19,10 +19,9 @@ end
 ```
 
 ### Add to RSpec
-Add the following to your projects `spec/rails_helper.rb` for Rails apps, or `spec/spec_helper.rb for non-Rails apps.
+Add the following to your projects `spec/rails_helper.rb` for Rails apps, or `spec/spec_helper.rb` for non-Rails apps.
 ```ruby
-Expected.configure do |config|
-end
+Expected.configure
 ```
 
 
