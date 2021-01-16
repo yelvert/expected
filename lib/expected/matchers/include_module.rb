@@ -5,23 +5,23 @@ module Expected
   module Matchers
 
     # Used to test inheritance
-    # @param expected_ancestor [Class]
-    # @return [InheritFromMatcher]
+    # @param expected_module [Module]
+    # @return [IncludeModuleMatcher]
     #
-    # @example Test if the subject inherits from the supplied Class
-    #   it { is_expected.to inherit_from(SomeClass) }
+    # @example Test if the subject includes the supplied Module
+    #   it { is_expected.to include_module(SomeModule) }
     #
-    def inherit_from(expected_ancestor)
-      InheritFromMatcher.new(expected_ancestor)
+    def include_module(expected_module)
+      IncludeModuleMatcher.new(expected_module)
     end
 
-    # Class used by {#inherit_from}
-    class InheritFromMatcher
-      attr_reader :expected_ancestor, :subject
+    # Class used by {#include_module}
+    class IncludeModuleMatcher
+      attr_reader :expected_module, :subject
 
-      # @param expected_ancestor [Class] The ancestor the {#subject} is expected to inherit from
-      def initialize(expected_ancestor)
-        @expected_ancestor = expected_ancestor
+      # @param expected_module [Module] The module the {#subject} is expected to include
+      def initialize(expected_module)
+        @expected_module = expected_module
       end
 
       # Run the test
@@ -30,7 +30,7 @@ module Expected
       # @return [False] if the test fails
       def matches?(subject)
         self.subject = subject
-        self.subject.ancestors.include? expected_ancestor
+        self.subject.included_modules.include? expected_module
       end
 
       # @return [String]
@@ -45,7 +45,7 @@ module Expected
 
       # @return [String]
       def description
-        "inherit_from: <#{expected_ancestor.inspect}>"
+        "include_module: <#{expected_module.inspect}>"
       end
 
       private
@@ -58,7 +58,7 @@ module Expected
 
         # @return String
         def expectation
-          "<#{subject.inspect}> to inherit from <#{expected_ancestor.inspect}>"
+          "<#{subject.inspect}> to include <#{expected_module.inspect}>"
         end
 
     end

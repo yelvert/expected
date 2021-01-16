@@ -7,7 +7,8 @@ module Expected
 end
 
 require 'expected/matchers/have_constant'
-require 'expected/matchers/inherit_from'
 require 'expected/matchers/have_attr_reader'
 require 'expected/matchers/have_attr_writer'
 require 'expected/matchers/have_attr_accessor'
+require 'expected/matchers/include_module'
+require 'expected/matchers/inherit_from'
