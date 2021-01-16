@@ -6,6 +6,7 @@ module Expected
   end
 end
 
+require 'expected/matchers/extend_module'
 require 'expected/matchers/have_constant'
 require 'expected/matchers/have_attr_reader'
 require 'expected/matchers/have_attr_writer'
