@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'securerandom'
+require 'expected/matchers/have_attr_reader'
+require 'expected/matchers/have_attr_writer'
 
 module Expected
   # :nodoc:
